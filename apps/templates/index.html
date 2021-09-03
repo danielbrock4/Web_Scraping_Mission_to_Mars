@@ -1,0 +1,85 @@
+<!-- Use ! a shortcut to autofill the basic HTML layout by typing an exclamation "!" on the 1st line, 
+    then press enter on your keyboard.-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission to Mars</title>
+    <!--CDN = A CDN is a group of servers that work together to provide users with content. In Bootstrap's case,
+        it means that we use the Bootstrap data that lives on those servers and pick and choose what
+        we need for our project. -->
+    <!--Import Bootstrap CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+    <!--<div /> with a class of "container". This is because a container is required for the grid system to work -->
+    <div class="container"></div>
+    <!--Bootstrap's Jumbotron makes the header BIG. By adding these specific class attributes, we're creating the 
+        Jumbotron component and centering the text that will be displayed through it.-->
+        <div class="jumbotron text-center"> 
+            <h1>Mission to Mars</h1> <!-- <h1 >is pretty straightforward. We don't need to dress it up at all because the Jumbotron is already doing that for us. -->
+              <!--The "btn btn-primary btn-lg" classes are also part of Bootstrap's button component (we're using 
+                Bootstrap to create a button instead of the <button /> tag and element). There are three classes here
+                because we're telling Bootstrap that we're using a button (btn), it's the primary color (btn-primary),
+                 and it's large (btn-lg) 
+                An <a /> tag is specifically used to link to other things, so we've also included the 
+                href (hypertext reference). The href is the link to another document or webpage. 
+                In our case, we're linking it to another component of our page, "/scrape".
+                We've added a role="button" role so that the webpage knows this link functions as a 
+                button, not as a regular hyperlink.-->  
+                <p>
+                    <a class="btn btn-primary btn-lg" href="/scrape" role="button">Scape New Data</a>
+                </p>
+        </div>
+        <!-- Mars News -->
+        <!--By adding a class of "row" we're telling Bootstrap that we're about to use the grid system and 
+            everything within this div will be horizontally aligned. The id "mars-news" helps us select it 
+            later if we want to customize it later with CSS.The col-md-12 means that we want to 
+            use 12 columns scaled to a midsize desktop display. -->
+        <div class="row" id="mars_news">
+            <div class="col-md-12">
+                <div class="media"> <!-- tells Bootstrap that we want our content to be displayed as media -->
+                    <div class="media-body"> <!-- then we insert the media within the body -->
+                        <h2>Latest Mars News</h2>
+                        <!--The mars.news_title follows the syntax document.variable_name: In our scraping code, 
+                            we saved the title of the article we scraped to the "news_title" variable and stored 
+                            that in the mars Mongo document. When Flask encounters these curly brackets, it then 
+                            looks to the string (in this case, a variable) stored within them and replaces the 
+                            variable with the data it holds. By adding class=“media-body” to the <h4> element, 
+                            we're again telling Bootstrap to apply specific styling to the header.-->
+                        <h4 class="media_heading">{{mars.news_title}}</h4>
+                        <p>{{ mars.news_paragraph }}</p>
+                    </div> 
+                </div>    
+            </div>
+        </div>
+        <!-- Featured Image -->
+        <div class="row" id="mars-featured-image">
+            <div class="col-md-8">
+                <h2>Featured Mars Image</h2>
+                <!--The next line inserts an image using the <img /> tag, but the tag alone won't actually 
+                    insert the image. We also need to include the source, or link to where the image is. 
+                    We do this by adding src="{{ mars.featured_image }}" When we add class="img-responsive," we're 
+                    using another built-in Bootstrap component that makes the image responsive. 
+                    That means that the size of the image varies depending on the browser used, 
+                    without us having to add extra code to do so. The last portion, alt="Responsive image," 
+                    adds alt-text to our image. Alt-text is just text that will appear if the image doesn't load, 
+                    or will be read by a screen reader if one is used. -->
+                <img src="{{ mars.featured_image }}" class="img-responsive" alt="Responsive image"/>
+            </div>
+             <!-- Mars Facts -->
+            <div class="col-md-4">
+                <div class="row" id="mars-facts">
+                    <h4>Mars Facts</h4>
+                    <!--The line{{ mars.facts | safe }} accomplishes two tasks: it first references the facts table in the mars 
+                    document, and it also tells the web browser that this code doesn't contain anything malicious. -->
+                    {{mars.facts | safe}}
+                </div>
+            </div>
+        </div>
+    
+</body>
+</html>
+<!-- -->

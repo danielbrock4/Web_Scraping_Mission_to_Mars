@@ -1,7 +1,7 @@
 # Use Flask to render a template, redirecting to another url, and creating a URL
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, redirect
 # Use PyMongo to interact with our Mongo database
-from flask_pymongo import pymongo
+from flask_pymongo import PyMongo
 # Use the scraping code, we will convert from Jupyter notebook to Python
 import scraping
 
