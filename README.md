@@ -14,4 +14,4 @@ Using Python libraries BeautifulSoup and Splinter, I automated Google Chrome to 
 
 
 ## **Webpage Preview**
-![Webpage_Preview](apps/templates/images/webpage_preview.png)
+![Webpage_Preview](apps/templates/images/webpage_preview.PNG)
