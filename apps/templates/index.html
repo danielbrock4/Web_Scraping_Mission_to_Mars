@@ -12,13 +12,20 @@
         we need for our project. -->
     <!--Import Bootstrap CDN -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+     <!--Add link to our stylesheet under Bootstrap's CDN link. Since we created a stylesheet and index.html file at the same time link to the style.css file that's in our css folder.-->
+    <!-- <link rel="stylesheet" href="css/style.css"> -->
 </head>
-<body>
+<body style="color: white; background-color: black" >
     <!--<div /> with a class of "container". This is because a container is required for the grid system to work -->
     <div class="container"></div>
     <!--Bootstrap's Jumbotron makes the header BIG. By adding these specific class attributes, we're creating the 
         Jumbotron component and centering the text that will be displayed through it.-->
-        <div class="jumbotron text-center"> 
+        <div class="jumbotron" style="background-size: 100% 100%;/*The size of the background is set to span the entire width and height of the element, no matter the size of the viewport. */
+        color: #f7f7f7;
+        background-image: url(https://images.financialexpress.com/2021/02/mars-1200.jpg);
+        height: 400px; 
+        background-position: center;
+        text-align: left; " > 
             <h1>Mission to Mars</h1> <!-- <h1 >is pretty straightforward. We don't need to dress it up at all because the Jumbotron is already doing that for us. -->
               <!--The "btn btn-primary btn-lg" classes are also part of Bootstrap's button component (we're using 
                 Bootstrap to create a button instead of the <button /> tag and element). There are three classes here
@@ -30,7 +37,13 @@
                 We've added a role="button" role so that the webpage knows this link functions as a 
                 button, not as a regular hyperlink.-->  
                 <p>
-                    <a class="btn btn-primary btn-lg" href="/scrape" role="button">Scape New Data</a>
+                    <a class="btn btn-primary btn-lg" href="/scrape" role="button"
+                    style="padding: 15px 50px;
+                    border: 1;
+                    border-color: white;
+                    background: #632307;
+                    color: #fff;"
+                    >Scape New Data</a>
                 </p>
         </div>
         <!-- Mars News -->
@@ -38,11 +51,13 @@
             everything within this div will be horizontally aligned. The id "mars-news" helps us select it 
             later if we want to customize it later with CSS.The col-md-12 means that we want to 
             use 12 columns scaled to a midsize desktop display. -->
+        <hr>
         <div class="row" id="mars_news">
             <div class="col-md-12">
                 <div class="media"> <!-- tells Bootstrap that we want our content to be displayed as media -->
                     <div class="media-body"> <!-- then we insert the media within the body -->
-                        <h2>Latest Mars News</h2>
+                        <h2>Latest Mars News:</h2>
+                        <br>
                         <!--The mars.news_title follows the syntax document.variable_name: In our scraping code, 
                             we saved the title of the article we scraped to the "news_title" variable and stored 
                             that in the mars Mongo document. When Flask encounters these curly brackets, it then 
@@ -51,14 +66,17 @@
                             we're again telling Bootstrap to apply specific styling to the header.-->
                         <h4 class="media_heading">{{mars.news_title}}</h4>
                         <p>{{ mars.news_paragraph }}</p>
+                        <br>
+                        <hr>
                     </div> 
                 </div>    
             </div>
         </div>
         <!-- Featured Image -->
         <div class="row" id="mars-featured-image">
-            <div class="col-md-8">
-                <h2>Featured Mars Image</h2>
+            <div class="col-xs-12 col-sm-6 col-md-8">
+                <h4>Featured Mars Image:</h4>
+                <br>
                 <!--The next line inserts an image using the <img /> tag, but the tag alone won't actually 
                     insert the image. We also need to include the source, or link to where the image is. 
                     We do this by adding src="{{ mars.featured_image }}" When we add class="img-responsive," we're 
@@ -67,18 +85,36 @@
                     without us having to add extra code to do so. The last portion, alt="Responsive image," 
                     adds alt-text to our image. Alt-text is just text that will appear if the image doesn't load, 
                     or will be read by a screen reader if one is used. -->
-                <img src="{{ mars.featured_image }}" class="img-responsive" alt="Responsive image"/>
+                <!-- If Images are False/None/Non-Existent, Then Default to Error Message | default('images/error.png', true)-->
+                <img src="{{ mars.featured_image }}" class="img-responsive" alt="Mars Featured Image"/>
             </div>
              <!-- Mars Facts -->
+            <br>
             <div class="col-md-4">
                 <div class="row" id="mars-facts">
-                    <h4>Mars Facts</h4>
+                    <h4>Mars Facts:</h4>
                     <!--The line{{ mars.facts | safe }} accomplishes two tasks: it first references the facts table in the mars 
                     document, and it also tells the web browser that this code doesn't contain anything malicious. -->
                     {{mars.facts | safe}}
                 </div>
             </div>
         </div>
+        <!-- Section for Mars Hemispheres -->
+      <div class="row" id="mars-hemispheres">
+        <div class="page-header">
+          <h2 class="text-center">Mars Hemispheres</h2>
+        </div>
+
+        {% for hemisphere in mars.hemisphere_image_urls %}
+        <div class="col-xs-6 col-md-3">
+          <div class="thumbnail">
+            <img src="{{hemisphere.img_url}}">
+            <div class="caption">
+              <h3><b>{{hemisphere.title}}</b></h3>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
     
 </body>
 </html>

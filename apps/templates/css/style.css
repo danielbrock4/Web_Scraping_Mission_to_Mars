@@ -1,0 +1,25 @@
+/* First, the area of customization is set, usually identified by its element, class attribute, or id attribute. 
+A colon follows, then the value of the customization, and a semicolon completes the line of code. It's very similar to KVPs in an object;*/
+body {
+    color: white;
+    background-color: black
+}
+.jumbotron {/*  tells the stylesheet to apply the changes only to divs with a class of "jumbotron."*/
+    background-size: 100% 100%;/*The size of the background is set to span the entire width and height of the element, no matter the size of the viewport. */
+    color: #f7f7f7; /*We've aligned the text to be in the center of the element.*/
+    background-image: url("https://images.financialexpress.com/2021/02/mars-1200.jpg"); /*We specify a background image, then tell the code where the image is stored.*/
+    height: 400px; 
+    background-position: center;
+    text-align: left; 
+}
+
+.btn {
+    padding: 15px 50px;
+    border: 1;
+    border-color: white;
+    background: #632307;
+    color: #fff;
+}
+
+
+/* */

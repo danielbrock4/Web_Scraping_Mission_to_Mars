@@ -24,8 +24,9 @@ def scrape_all():
       "news_paragraph": news_paragraph,
       "featured_image": featured_image(browser),
       "facts": mars_facts(),
+      "hemisphere_image_urls": mars_hemispheres(browser),
       # adding the date the code was run last 
-      "last_modified": dt.datetime.now()
+      "last_modified": dt.datetime.now(),
     }
     
     # Stop webdriver and return data
@@ -113,6 +114,47 @@ def mars_facts():
 
     # Convert dataframe into HTML format, add bootstrap
     return df.to_html()
+
+## Mars Hemispheres
+def mars_hemispheres(browser):
+    # 1. Use browser to visit the URL 
+    url = 'https://marshemispheres.com/'
+    browser.visit(url)
+
+    # 2. Create a list to hold the images and titles.
+
+    # Set up the HTML parser using BeautifulSoup, which parses the HTML text and then stores it as an object.
+    html = browser.html
+    hemi_soup = soup(html, 'html.parser')
+
+    #Parse Products List in HTML in element item
+    hemispheres = hemi_soup.find_all('div', class_='item')
+
+    hemisphere_image_urls = []
+
+    # 3. Write code to retrieve the image urls and titles for each hemisphere.
+    for which_hemisphere in hemispheres:
+        # get title of hemisphere name and remove unnessary text
+        full_title = which_hemisphere.h3.text
+        title = full_title.replace(" Enhanced", "")
+        
+        # the base URL doesnt hold the absolute link to the JPEG, so parse html to link
+        # add it to base url
+        href_relative_link = which_hemisphere.find('a')['href']
+        base_url = "https://marshemispheres.com/"
+        image_link = base_url + href_relative_link
+        
+        #vist new sight adn click on link
+        browser.visit(image_link)
+        
+        # use css elements to access link to jpeg
+        element = browser.find_link_by_text('Sample').first
+        img_url = element['href']
+
+        # create a dictionary and send it to list
+        hemisphere_image_urls.append({"title": title, "img_url": img_url})
+        
+    return hemisphere_image_urls
 
 # tell Flask that our script is complete and ready for action.
 if __name__=='__main__':
