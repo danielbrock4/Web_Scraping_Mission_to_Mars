@@ -1,7 +1,7 @@
 # Module 10: Mission to Mars - Web Scraping with HTML/CSS & NoSQL
 ## Resources
 
-- **Data Sources Sraped from Web:** 
+- **Data Sources Scraped from Web:** 
   - https://redplanetscience.com/
   - https://spaceimages-mars.com
   - https://galaxyfacts-mars.com
